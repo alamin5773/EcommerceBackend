@@ -36,7 +36,7 @@ namespace Ecommerce.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody]Customer userDetails)
+        public async Task<IActionResult> Register([FromBody]User userDetails)
         {
             if (!ModelState.IsValid || userDetails == null)
             {
@@ -61,11 +61,11 @@ namespace Ecommerce.Controllers
             }
             else
             {
-                var identityUserResult = await userManager.FindByNameAsync(userDetails.EmailAddress);
-                var resultT = await userManager.AddToRoleAsync(identityUserResult, "customer");
+          
+                var resultT = await userManager.AddToRoleAsync(identityUser, "customer");
 
-                userDetails.AspNetUserID = identityUserResult.Id;
-                userDetails.Password = identityUserResult.PasswordHash;
+                userDetails.AspNetUserID = identityUser.Id;
+                userDetails.Password = identityUser.PasswordHash;
 
               
                 unitOfWork.CustomertRepoitory.Insert(userDetails);

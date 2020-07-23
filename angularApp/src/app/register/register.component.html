@@ -1,0 +1,37 @@
+﻿<div class="col-sm-6 offset-sm-3">
+<h2>Register</h2>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="firstName">Name</label>
+        <input type="text" formControlName="Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Name.errors }" />
+        <div *ngIf="submitted && f.Name.errors" class="invalid-feedback">
+            <div *ngIf="f.Name.errors.required">Name is required</div>
+        </div>
+    </div>
+   
+    <div class="form-group">
+        <label for="username">Email</label>
+        <input type="text" formControlName="EmailAddress" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.EmailAddress.errors }" />
+        <div *ngIf="submitted && f.EmailAddress.errors" class="invalid-feedback">
+            <div *ngIf="f.EmailAddress.errors.required">Email is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        
+        <input type="password" formControlName="Password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Password.errors }" />
+        <div *ngIf="submitted && f.Password.errors" class="invalid-feedback">
+            <div *ngIf="f.Password.errors.required">Password is required</div>
+            <div *ngIf="f.Password.errors.minlength">Password must be at least 6 characters</div>
+        </div>
+        <span style="font-size: 13px;color: blue;" for="password">Password shoud contain uppercase, lowercase, number & special char </span>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Register
+        </button>
+        <a routerLink="/login" class="btn btn-link">Go to Login</a>
+    </div>
+</form>
+</div>

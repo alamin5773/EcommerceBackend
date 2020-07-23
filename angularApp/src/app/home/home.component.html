@@ -1,0 +1,12 @@
+﻿<h1>Hi {{currentUser.Name}}!</h1>
+
+<div class="col-sm-12 p-2" style="display: flex;" *ngIf="currentUser">
+    <div class="col-sm-6 m-2" style="border: 1px solid; float: left;position: relative;display: block;" >
+<product-list (productAdded)="addProductToCart($event)" [products]="ProductDBList"></product-list>
+</div>
+<div class="col-sm-6 m-2 p-2" style="    border: 1px solid;float: right;position: relative;display: block;"> 
+<shopping-cart [products]="cartProductList" (productRemoved)="removeProduct($event)"></shopping-cart>
+</div>
+</div>
+
+

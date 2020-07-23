@@ -52,7 +52,7 @@ namespace Ecommerce
                 {
                     userManager.AddToRoleAsync(user,"admin").Wait();
 
-                    Customer customer = new Customer();
+                    User customer = new User();
                     customer.EmailAddress = user.Email;
                     customer.Name = user.UserName;
                     customer.AspNetUserID = user.Id;

@@ -18,7 +18,7 @@ namespace Ecommerce
         {
         }
 
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<User> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderProduct> OrderProduct { get; set; }
@@ -28,7 +28,7 @@ namespace Ecommerce
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Customer>().ToTable("Customer");
+            modelBuilder.Entity<User>().ToTable("Customer");
             modelBuilder.Entity<Product>().ToTable("Product");
             modelBuilder.Entity<Order>().ToTable("Order");
             modelBuilder.Entity<OrderProduct>().ToTable("OrderProduct");

@@ -40,7 +40,7 @@ namespace Ecommerce.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody]LoginModel credentials)
         {
-            Customer customer;
+            User customer;
 
             if (!ModelState.IsValid
                 || credentials == null)
@@ -74,7 +74,7 @@ namespace Ecommerce.Controllers
         }
 
 
-        private string GenerateToken(Customer customer, string rolenameString)
+        private string GenerateToken(User customer, string rolenameString)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(jwtBearerTokenSettings.SecretKey);
