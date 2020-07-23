@@ -39,6 +39,8 @@ namespace Ecommerce.Controllers
         {
             
             IEnumerable<Product> listOfProduct = unitOfWork.ProductRepository.Get(orderBy: q => q.OrderBy(d => d.ProductName));
+
+
             return Ok(listOfProduct);
         }
 
