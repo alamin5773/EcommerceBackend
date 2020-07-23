@@ -9,7 +9,7 @@ namespace Ecommerce.DAL
     public class UnitOfWork : IDisposable
     {
         private DatabaseContext context;
-        private GenericRepository<User> customerRepository;
+        private GenericRepository<User> userRepository;
         private GenericRepository<Product> productRepository;
         private GenericRepository<Order> orderRepository;
         private GenericRepository<OrderProduct> orderProductRepository;
@@ -20,16 +20,16 @@ namespace Ecommerce.DAL
 
             
         }
-        public GenericRepository<User> CustomertRepoitory
+        public GenericRepository<User> UserRepoitory
         {
             get
             {
 
-                if (this.customerRepository == null)
+                if (this.userRepository == null)
                 {
-                    this.customerRepository = new GenericRepository<User>(context);
+                    this.userRepository = new GenericRepository<User>(context);
                 }
-                return customerRepository;
+                return userRepository;
             }
         }
 

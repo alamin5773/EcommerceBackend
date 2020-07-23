@@ -40,14 +40,13 @@ namespace Ecommerce.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody]LoginModel credentials)
         {
-            User customer;
+            User user;
 
             if (!ModelState.IsValid
                 || credentials == null)
             {
                 return new BadRequestObjectResult(new { Message = "Login failed" });
             }
-
 
             var identityUser = await userManager.FindByNameAsync(credentials.Email);
             if (identityUser != null)
@@ -56,18 +55,14 @@ namespace Ecommerce.Controllers
 
                 IList<string> rolename = await userManager.GetRolesAsync(identityUser);
                 string rolenameString = string.Join(",", rolename);
-             
-                if (result == PasswordVerificationResult.Success ) {
 
-                    customer= unitOfWork.CustomertRepoitory.Get(filter: x => x.AspNetUserID == identityUser.Id).FirstOrDefault();
-                    var token = GenerateToken(customer, rolenameString);
+                if (result == PasswordVerificationResult.Success)
+                {
+                    user = unitOfWork.UserRepoitory.Get(filter: x => x.AspNetUserID == identityUser.Id).FirstOrDefault();
+                    var token = GenerateToken(user, rolenameString);
                     return Ok(new { token = token });
                 }
-
-               
             }
-
-            
 
             return new BadRequestObjectResult(new { Message = "Login failed" });
 
@@ -84,7 +79,7 @@ namespace Ecommerce.Controllers
                     {
                     new Claim(ClaimTypes.Role, rolenameString),
                     new Claim(ClaimTypes.Email, customer.EmailAddress.ToString()),
-                    new Claim(ClaimTypes.NameIdentifier, customer.CustomerID.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, customer.UserID.ToString())
                     }),
 
                 Expires = DateTime.UtcNow.AddSeconds(jwtBearerTokenSettings.ExpiryTimeInSeconds),

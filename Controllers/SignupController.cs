@@ -22,8 +22,6 @@ namespace Ecommerce.Controllers
     {
 
         private readonly UserManager<IdentityUser> userManager;
-
-      
         UnitOfWork unitOfWork;
 
 
@@ -65,11 +63,8 @@ namespace Ecommerce.Controllers
                 var resultT = await userManager.AddToRoleAsync(identityUser, "customer");
 
                 userDetails.AspNetUserID = identityUser.Id;
-                userDetails.Password = identityUser.PasswordHash;
-
-              
-                unitOfWork.CustomertRepoitory.Insert(userDetails);
-
+                userDetails.Password = identityUser.PasswordHash;           
+                unitOfWork.UserRepoitory.Insert(userDetails);
                 unitOfWork.Save();
               
             }
