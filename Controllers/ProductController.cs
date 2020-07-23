@@ -53,6 +53,8 @@ namespace Ecommerce.Controllers
               
                 try
                 {
+                    List<OrderProduct> verifiedOrderProductList = new List<OrderProduct>();
+
                     decimal total = 0;
                     foreach (var item in orderProductList)
                     {
@@ -60,21 +62,31 @@ namespace Ecommerce.Controllers
                         if (Product != null)
                         {
                             total += Product.ProductPrice * item.ProductCount;
+                            OrderProduct orderProduct = new OrderProduct();
+                            orderProduct.ProductID = Product.ProductID;
+                            orderProduct.ProductCount = item.ProductCount;
+                            verifiedOrderProductList.Add(orderProduct);
                         }
                     }
 
-                    Order order = new Order();
-                    order.CustomerID = userId;
-                    order.OrderDate = DateTime.Now;
-                    order.TotalPrice = total;
+                    if (verifiedOrderProductList.Count > 0)
+                    {
 
-                    unitOfWork.OrderRepository.Insert(order);
-                    unitOfWork.Save();
+                        Order order = new Order();
+                        order.CustomerID = userId;
+                        order.OrderDate = DateTime.Now;
+                        order.TotalPrice = total;
 
-                    orderProductList = orderProductList.Select(c => { c.OrderID = order.OrderID; return c; }).ToList();
+                        unitOfWork.OrderRepository.Insert(order);
+                        unitOfWork.Save();
 
-                    await  unitOfWork.OrderProductRepository.InsertALL(orderProductList);
-                    unitOfWork.Save();
+                        verifiedOrderProductList = verifiedOrderProductList.Select(c => { c.OrderID = order.OrderID; return c; }).ToList();
+
+                        await unitOfWork.OrderProductRepository.InsertALL(verifiedOrderProductList);
+
+                
+                        unitOfWork.Save();
+                    }
 
                     return Ok(new { Message = "Order place success" });
                 }

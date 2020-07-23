@@ -11,7 +11,7 @@ namespace Ecommerce.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OrderDetailsID { get; set; }
+        public int OrderProductID { get; set; }
         public int OrderID { get; set; }
         public int ProductID { get; set; }
         public int ProductCount { get; set; }
